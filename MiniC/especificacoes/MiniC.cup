@@ -1,0 +1,33 @@
+package br.com.minic.analisadorsintatico;
+
+// TERMINAIS
+
+terminal VOID, INT, FLOAT, DOUBLE, CHAR;
+terminal INCLUDE, MAIN, RETURN, IF, ELSE, WHILE, PRINTF, PRINTINT, PRINTSTR;
+terminal MENOR_IGUAL, MENOR, MAIOR_IGUAL, MAIOR, IGUAL, ATRIBUICAO, DIFERENTE, NEGACAO;
+terminal SOMA, SUB, DIV, MULT;
+terminal JOGO_DA_VELHA, PONTO, PONTO_VIRGULA, VIRGULA, ABRE_CHAVE, FECHA_CHAVE, ABRE_PARENTESES, FECHA_PARENTESES;
+terminal LETRA_H;
+terminal IDENTIFICADOR;
+terminal LITERAL_INTEIRO;
+terminal LITERAL_PONTO_FLUTUANTE;
+terminal LITERAL_CHAR;
+terminal LITERAL_STRING;
+
+// NAO TERMINAL
+
+non terminal ProgramaMiniC;
+non terminal DeclInclude;
+non terminal DeclIncludeList;
+
+start with ProgramaMiniC;
+
+ProgramaMiniC ::= DeclIncludeList {::};
+
+DeclIncludeOpt ::= {::} |
+				DeclIncludeList {::};
+				
+DeclIncludeList ::= {::} |
+					DeclInclude DeclIncludeList {::};
+					
+DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR PONTO LETRA_H MAIOR {::};
