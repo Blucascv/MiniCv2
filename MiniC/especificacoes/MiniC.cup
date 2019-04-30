@@ -52,4 +52,31 @@ Comando ::= ABRE_CHAVE Comando MULT FECHA_CHAVE {::}; |
 	    Tipo ID = Expressao (, ID = Expressao)*; |
 	    ID = Expressao;
 	    
-ExpRel ::= 
+ExpRel ::= ExpRelAux OpRelacional ExpRelAux |
+	   !(ExpRel)
+
+ExpRelAux ::= ID |
+	    Literal Inteiro |
+	    Literal Ponto Flutuante
+	    
+OpRelacional → > | < | == | >= | <= | !=
+
+ExprAritmetica → ExprAritmetica + T |
+		 ExprAritmetica - T |
+		 T
+
+T → T * F |
+    T / F |
+    F
+    
+F → (ExprAritmetica) |
+    ID |
+    Literal Inteiro |
+    Literal Ponto Flutuante |
+    ID (Parametros*)
+    
+Expressao → ExprAritmetica |
+	    Literal Char |
+	    Literal String
+	    
+Parametros → Expressao (, Expressao)*
