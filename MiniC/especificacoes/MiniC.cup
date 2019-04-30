@@ -35,48 +35,48 @@ DeclIncludeList ::= {::} |
 					
 DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR PONTO LETRA_H MAIOR {::};
 
-DeclFuncoes ::= Tipo IDENTIFICADOR ABRE_PARENTESES ListaArgumentos FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN Expressao FECHA_CHAVE {::};
+DeclFuncoes ::= Tipo IDENTIFICADOR ABRE_PARENTESES ListaArgumentos FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN Expressao PONTO_VIRGULA FECHA_CHAVE {::};
 
-FuncaoPrincipal ::= INT MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN LITERAL_INTEIRO FECHA_CHAVE {::};
+FuncaoPrincipal ::= INT MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN LITERAL_INTEIRO PONTO_VIRGULA FECHA_CHAVE {::};
 
 Tipo ::= INT {::}; | FLOAT {::}; | DOUBLE {::}; | CHAR {::};
 
 Comando ::= ABRE_CHAVE Comando MULT FECHA_CHAVE {::}; | 
-	    IF ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando ELSE Comando |
-	    IF ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando |
-	    while ABRE_PARENTESES ExpRel FECHA_PARENTESES  Comando |
-	    printf ABRE_PARENTESES Expressao FECHA_PARENTESES |
-	    printint ABRE_PARENTESES Literal Inteiro FECHA_PARENTESES ; |
-	    printstr ABRE_PARENTESES Literal Inteiro FECHA_PARENTESES ; |
-	    Tipo ID ABRE_PARENTESES Expressao FECHA_PARENTESES(, ID)*; |
-	    Tipo ID = Expressao ABRE_PARENTESES Expressao FECHA_PARENTESES(, ID = Expressao)*; |
-	    ID = Expressao;
+	    IF ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando ELSE Comando {::}; |
+	    IF ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando {::}; |
+	    while ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando {::}; |
+	    printf ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}; |
+	    printint ABRE_PARENTESES LITERAL_INTEIRO FECHA_PARENTESES PONTO_VIRGULA {::}; |
+	    printstr ABRE_PARENTESES LITERAL_INTEIRO FECHA_PARENTESES PONTO_VIRGULA {::}; |
+	    Tipo ID ABRE_PARENTESES Expressao FECHA_PARENTESES ABRE_PARENTESES VIRGULA ID FECHA_PARENTESES MULT PONTO_VIRGULA {::}; |
+	    Tipo ID ATRIBUICAO Expressao ABRE_PARENTESES Expressao FECHA_PARENTESES ABRE_PARENTESES VIRGULA ID IGUAL Expressao FECHA_PARENTESES MULT PONTO_VIRGULA {::}; |
+	    ID ATRIBUICAO Expressao PONTO_VIRGULA {::};
 	    
-ExpRel ::= ExpRelAux OpRelacional ExpRelAux |
-	   !(ExpRel)
+ExpRel ::= ExpRelAux OpRelacional ExpRelAux {::}; |
+	   NEGACAO ABRE_PARENTESES ExpRel FECHA_PARENTESES {::};
 
-ExpRelAux ::= ID |
-	    Literal Inteiro |
-	    Literal Ponto Flutuante
+ExpRelAux ::= ID {::}; |
+	      LITERAL_INTEIRO {::}; |
+	      LITERAL_PONTO_FLUTUANTE {::};
 	    
-OpRelacional → > | < | == | >= | <= | !=
+OpRelacional ::= MAIOR {::}; | MENOR {::}; | IGUAL {::}; | MAIOR_IGUAL {::}; | MENOR_IGUAL {::}; | DIFERENTE {::};
 
-ExprAritmetica → ExprAritmetica + T |
-		 ExprAritmetica - T |
-		 T
+ExprAritmetica ::= ExprAritmetica SOMA T {::}; |
+		   ExprAritmetica SUB T {::}; |
+		   T {::};
 
-T → T * F |
-    T / F |
-    F
+T ::= T MULT F {::}; |
+      T DIV F {::}; |
+      F {::};
     
-F → (ExprAritmetica) |
-    ID |
-    Literal Inteiro |
-    Literal Ponto Flutuante |
-    ID (Parametros*)
+F ::= ABRE_PARENTESES ExprAritmetica FECHA_PARENTESES {::}; |
+      ID {::}; |
+      LITERAL_INTEIRO {::}; |
+      LITERAL_PONTO_FLUTUANTE {::}; |
+      ID ABRE_PARENTESES Parametros MULT FECHA_PARENTESES {::};
     
-Expressao → ExprAritmetica |
-	    Literal Char |
-	    Literal String
+Expressao ::= ExprAritmetica {::}; |
+	      LITERAL_CHAR {::}; |
+	      LITERAL_STRING {::};
 	    
-Parametros → Expressao (, Expressao)*
+Parametros ::= Expressao ABRE_PARENTESES VIRGULA Expressao FECHA_PARENTESES MULT {::};
