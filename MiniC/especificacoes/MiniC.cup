@@ -35,21 +35,21 @@ DeclIncludeList ::= {::} |
 					
 DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR PONTO LETRA_H MAIOR {::};
 
-DeclFuncoes ::= Tipo IDENTIFICADOR ABRE_PARENTESES ... FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN Expressao FECHA_CHAVE {::};
+DeclFuncoes ::= Tipo IDENTIFICADOR ABRE_PARENTESES ListaArgumentos FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN Expressao FECHA_CHAVE {::};
 
 FuncaoPrincipal ::= INT MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN LITERAL_INTEIRO FECHA_CHAVE {::};
 
 Tipo ::= INT {::}; | FLOAT {::}; | DOUBLE {::}; | CHAR {::};
 
 Comando ::= ABRE_CHAVE Comando MULT FECHA_CHAVE {::}; | 
-	    if ( ExpRel ) Comando else Comando |
-	    if ( ExpRel ) Comando |
-	    while ( ExpRel) Comando |
-	    printf ( Expressao ); |
-	    printint ( Literal Inteiro ); |
-	    printstr ( Literal String ); |
-	    Tipo ID (, ID)*; |
-	    Tipo ID = Expressao (, ID = Expressao)*; |
+	    IF ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando ELSE Comando |
+	    IF ABRE_PARENTESES ExpRel FECHA_PARENTESES Comando |
+	    while ABRE_PARENTESES ExpRel FECHA_PARENTESES  Comando |
+	    printf ABRE_PARENTESES Expressao FECHA_PARENTESES |
+	    printint ABRE_PARENTESES Literal Inteiro FECHA_PARENTESES ; |
+	    printstr ABRE_PARENTESES Literal Inteiro FECHA_PARENTESES ; |
+	    Tipo ID ABRE_PARENTESES Expressao FECHA_PARENTESES(, ID)*; |
+	    Tipo ID = Expressao ABRE_PARENTESES Expressao FECHA_PARENTESES(, ID = Expressao)*; |
 	    ID = Expressao;
 	    
 ExpRel ::= ExpRelAux OpRelacional ExpRelAux |
