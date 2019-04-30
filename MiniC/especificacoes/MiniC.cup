@@ -19,15 +19,37 @@ terminal LITERAL_STRING;
 non terminal ProgramaMiniC;
 non terminal DeclInclude;
 non terminal DeclIncludeList;
+non terminal DeclFuncoes;
+non terminal FuncaoPrincipal;
+non terminal Tipo;
 
 start with ProgramaMiniC;
 
 ProgramaMiniC ::= DeclIncludeList {::};
 
-DeclIncludeOpt ::= {::} |
+DeclInclude ::= {::} |
 				DeclIncludeList {::};
 				
 DeclIncludeList ::= {::} |
 					DeclInclude DeclIncludeList {::};
 					
 DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR PONTO LETRA_H MAIOR {::};
+
+DeclFuncoes ::= Tipo IDENTIFICADOR ABRE_PARENTESES ... FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN Expressao FECHA_CHAVE {::};
+
+FuncaoPrincipal ::= INT MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE Comando MULT RETURN LITERAL_INTEIRO FECHA_CHAVE {::};
+
+Tipo ::= INT {::}; | FLOAT {::}; | DOUBLE {::}; | CHAR {::};
+
+Comando ::= ABRE_CHAVE Comando MULT FECHA_CHAVE {::}; | 
+	    if ( ExpRel ) Comando else Comando |
+	    if ( ExpRel ) Comando |
+	    while ( ExpRel) Comando |
+	    printf ( Expressao ); |
+	    printint ( Literal Inteiro ); |
+	    printstr ( Literal String ); |
+	    Tipo ID (, ID)*; |
+	    Tipo ID = Expressao (, ID = Expressao)*; |
+	    ID = Expressao;
+	    
+ExpRel ::= 
